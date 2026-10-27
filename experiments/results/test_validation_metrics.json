@@ -1,0 +1,85 @@
+{
+  "parameters": [
+    3.111091282042941,
+    2.2414339845150555,
+    2.2044985959411507,
+    0.849504778350331,
+    0.40666197920291025,
+    0.0
+  ],
+  "tracking_evaluations": {
+    "explicit": {
+      "mean_mae": 0.31120368764201317,
+      "mean_rmse": 0.4390328990362587,
+      "worst_max_err": 1.4783706329626585
+    },
+    "implicit": {
+      "mean_mae": 0.3221333884699526,
+      "mean_rmse": 0.44925364023828607,
+      "worst_max_err": 1.5039437514228
+    },
+    "rk4": {
+      "mean_mae": 0.31568994404402,
+      "mean_rmse": 0.44323366259550867,
+      "worst_max_err": 1.4874476357030544
+    }
+  },
+  "forecast_horizons": {
+    "horizon_1_steps_15min": {
+      "horizon_steps": 1,
+      "horizon_minutes": 15.0,
+      "horizon_hours": 0.25,
+      "mae_explicit": 0.26230820783579456,
+      "mae_implicit": 0.14094105337544224,
+      "mae_rk4": 0.1616384019184637
+    },
+    "horizon_2_steps_30min": {
+      "horizon_steps": 2,
+      "horizon_minutes": 30.0,
+      "horizon_hours": 0.5,
+      "mae_explicit": 0.23860878122235085,
+      "mae_implicit": 0.20240187375485932,
+      "mae_rk4": 0.2218341305634815
+    },
+    "horizon_4_steps_60min": {
+      "horizon_steps": 4,
+      "horizon_minutes": 60.0,
+      "horizon_hours": 1.0,
+      "mae_explicit": 0.300293225723217,
+      "mae_implicit": 0.2729956534050165,
+      "mae_rk4": 0.28368014511531525
+    },
+    "horizon_8_steps_120min": {
+      "horizon_steps": 8,
+      "horizon_minutes": 120.0,
+      "horizon_hours": 2.0,
+      "mae_explicit": 0.31840862124314406,
+      "mae_implicit": 0.31820181280820165,
+      "mae_rk4": 0.31737907731856624
+    },
+    "horizon_16_steps_240min": {
+      "horizon_steps": 16,
+      "horizon_minutes": 240.0,
+      "horizon_hours": 4.0,
+      "mae_explicit": 0.32308540911372835,
+      "mae_implicit": 0.33182919247245024,
+      "mae_rk4": 0.3257970943464125
+    },
+    "horizon_48_steps_720min": {
+      "horizon_steps": 48,
+      "horizon_minutes": 720.0,
+      "horizon_hours": 12.0,
+      "mae_explicit": 0.3152808307899372,
+      "mae_implicit": 0.32313325522255815,
+      "mae_rk4": 0.31727092232496373
+    },
+    "horizon_96_steps_1440min": {
+      "horizon_steps": 96,
+      "horizon_minutes": 1440.0,
+      "horizon_hours": 24.0,
+      "mae_explicit": 0.32028361989928955,
+      "mae_implicit": 0.33029620967912576,
+      "mae_rk4": 0.3238140104232823
+    }
+  }
+}

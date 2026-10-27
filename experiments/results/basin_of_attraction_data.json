@@ -1,0 +1,33 @@
+{
+  "parameters": [
+    3.111091282042941,
+    2.2414339845150555,
+    2.2044985959411507,
+    0.849504778350331,
+    0.40666197920291025,
+    0.0
+  ],
+  "upstream_u": 1.0,
+  "attractor": [
+    0.8175099568439211,
+    0.7227398068048695,
+    0.7227398068048695
+  ],
+  "eigenvalues": [
+    -4.500048511418709,
+    -2.82925558508305,
+    -2.2044985959411507
+  ],
+  "unstable_threshold_x1": -4.479751019318492,
+  "grid_size": 50,
+  "total_grid_points": 2500,
+  "all_converged": true,
+  "min_steps": 109,
+  "max_steps": 259,
+  "mean_steps": 228.9684,
+  "step_size_h": 0.02,
+  "artifacts": {
+    "png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/basin_of_attraction_photo.png",
+    "svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/basin_of_attraction_photo.svg"
+  }
+}

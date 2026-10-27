@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;">
+<text x="450.0" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">1,000-Epoch Optimization Convergence on Full Dataset</text>
+<rect x="90" y="60" width="770" height="370" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="90.0" y1="60" x2="90.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="90.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">-18.80</text>
+<line x1="218.33333333333334" y1="60" x2="218.33333333333334" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="218.33333333333334" y="450" text-anchor="middle" font-size="12" fill="#64748b">152.80</text>
+<line x1="346.6666666666667" y1="60" x2="346.6666666666667" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="346.6666666666667" y="450" text-anchor="middle" font-size="12" fill="#64748b">324.40</text>
+<line x1="475.0" y1="60" x2="475.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="475.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">496.00</text>
+<line x1="603.3333333333334" y1="60" x2="603.3333333333334" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="603.3333333333334" y="450" text-anchor="middle" font-size="12" fill="#64748b">667.60</text>
+<line x1="731.6666666666667" y1="60" x2="731.6666666666667" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="731.6666666666667" y="450" text-anchor="middle" font-size="12" fill="#64748b">839.20</text>
+<line x1="860.0" y1="60" x2="860.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="860.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">1010.80</text>
+<line x1="90" y1="430.0" x2="860" y2="430.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="434.0" text-anchor="end" font-size="12" fill="#64748b">0.01</text>
+<line x1="90" y1="368.33333333333337" x2="860" y2="368.33333333333337" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="372.33333333333337" text-anchor="end" font-size="12" fill="#64748b">0.02</text>
+<line x1="90" y1="306.66666666666674" x2="860" y2="306.66666666666674" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="310.66666666666674" text-anchor="end" font-size="12" fill="#64748b">0.02</text>
+<line x1="90" y1="245.00000000000003" x2="860" y2="245.00000000000003" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="249.00000000000003" text-anchor="end" font-size="12" fill="#64748b">0.02</text>
+<line x1="90" y1="183.3333333333334" x2="860" y2="183.3333333333334" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="187.3333333333334" text-anchor="end" font-size="12" fill="#64748b">0.02</text>
+<line x1="90" y1="121.66666666666669" x2="860" y2="121.66666666666669" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="125.66666666666669" text-anchor="end" font-size="12" fill="#64748b">0.03</text>
+<line x1="90" y1="60.0" x2="860" y2="60.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="64.0" text-anchor="end" font-size="12" fill="#64748b">0.03</text>
+<text x="475.0" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Epoch</text>
+<text transform="rotate(-90)" x="-245.0" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Mean Squared Error Loss</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="2.2" points="104.8,76.8 112.3,153.0 119.8,165.3 127.2,197.6 134.7,188.3 142.2,248.5 149.7,234.4 157.2,257.8 164.6,272.6 172.1,293.8 179.6,279.4 187.1,263.1 194.6,306.0 202.0,297.7 209.5,317.0 217.0,324.2 224.5,340.3 231.9,328.8 239.4,313.3 246.9,351.2 254.4,348.5 261.9,366.7 269.3,359.1 276.8,335.7 284.3,346.6 291.8,362.3 299.3,365.7 306.7,377.0 314.2,381.9 321.7,367.7 329.2,386.8 336.6,372.1 344.1,362.9 351.6,378.2 359.1,382.9 366.6,371.2 374.0,367.6 381.5,356.4 389.0,389.2 396.5,377.5 404.0,375.0 411.4,367.3 418.9,387.2 426.4,385.4 433.9,375.6 441.3,397.2 448.8,382.7 456.3,392.1 463.8,365.1 471.3,376.2 478.7,380.3 486.2,372.1 493.7,401.7 501.2,335.4 508.7,377.2 516.1,375.2 523.6,376.8 531.1,385.8 538.6,391.6 546.0,390.9 553.5,386.4 561.0,378.7 568.5,381.7 576.0,408.9 583.4,402.3 590.9,383.5 598.4,391.1 605.9,392.5 613.4,390.3 620.8,391.3 628.3,382.1 635.8,388.3 643.3,381.7 650.7,392.1 658.2,369.6 665.7,413.2 673.2,396.6 680.7,396.1 688.1,401.3 695.6,398.1 703.1,385.4 710.6,396.8 718.1,401.1 725.5,377.1 733.0,377.1 740.5,398.3 748.0,395.2 755.4,397.3 762.9,387.8 770.4,393.6 777.9,388.6 785.4,395.5 792.8,383.5 800.3,393.5 807.8,391.7 815.3,382.1 822.8,396.6 830.2,387.9 837.7,400.7 845.2,398.8"/>
+<rect x="105" y="75" width="202" height="32" fill="#ffffff" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="1" rx="4"/>
+<line x1="115" y1="87" x2="140" y2="87" stroke="#2563eb" stroke-width="2.5"/>
+<text x="150" y="91" font-size="12" fill="#334155">Training Loss (MSE)</text>
+</svg>

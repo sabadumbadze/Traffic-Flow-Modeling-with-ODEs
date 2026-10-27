@@ -1,0 +1,94 @@
+{
+  "model_architecture": "16-Parameter Extended Nonlinear Traffic Flow ODE",
+  "epochs": 100,
+  "parameters": {
+    "alpha1": 4.329290133791719,
+    "alpha2": 3.2426929117284327,
+    "alpha3": 2.4182527351378784,
+    "beta1": 0.0,
+    "beta2": 0.40692682188010937,
+    "beta3": 0.0,
+    "delta1": 0.0,
+    "delta2": 0.13123300738929428,
+    "delta3": 0.0,
+    "gamma1": 0.0,
+    "gamma2": 0.0,
+    "kappa2": 0.7066245082580157,
+    "kappa3": 0.777854057545926,
+    "c1": 0.01977066977369157,
+    "c2": -0.4875759885398493,
+    "c3": 0.7014112962694791
+  },
+  "training_time_sec": 558.0733528137207,
+  "best_val_loss": 0.03119363142196849,
+  "unseen_test_metrics": {
+    "tracking_mae": {
+      "explicit": 0.12945779587304637,
+      "implicit": 0.15046804283537363,
+      "rk4": 0.13731574351431405
+    },
+    "tracking_rmse": {
+      "explicit": 0.16785046318159538,
+      "implicit": 0.1901119676429814,
+      "rk4": 0.17489466355785063
+    },
+    "tracking_max": {
+      "explicit": 0.8487015212061817,
+      "implicit": 0.7585022660014755,
+      "rk4": 0.7242452212373067
+    },
+    "forecast_horizons": {
+      "horizon_1_steps": {
+        "steps": 1,
+        "minutes": 15.0,
+        "hours": 0.25,
+        "mae": 0.10169242593770296
+      },
+      "horizon_2_steps": {
+        "steps": 2,
+        "minutes": 30.0,
+        "hours": 0.5,
+        "mae": 0.1177557514188913
+      },
+      "horizon_4_steps": {
+        "steps": 4,
+        "minutes": 60.0,
+        "hours": 1.0,
+        "mae": 0.1323356711821275
+      },
+      "horizon_8_steps": {
+        "steps": 8,
+        "minutes": 120.0,
+        "hours": 2.0,
+        "mae": 0.137456554464407
+      },
+      "horizon_16_steps": {
+        "steps": 16,
+        "minutes": 240.0,
+        "hours": 4.0,
+        "mae": 0.13841517191517666
+      },
+      "horizon_48_steps": {
+        "steps": 48,
+        "minutes": 720.0,
+        "hours": 12.0,
+        "mae": 0.14037572051489014
+      },
+      "horizon_96_steps": {
+        "steps": 96,
+        "minutes": 1440.0,
+        "hours": 24.0,
+        "mae": 0.14254157549384058
+      }
+    }
+  },
+  "artifacts": {
+    "ivp_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_ivp_photo.png",
+    "ivp_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_ivp_photo.svg",
+    "basin_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_basin_photo.png",
+    "basin_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_basin_photo.svg",
+    "forecast_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_forecast_horizon.svg",
+    "comparison_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_vs_base_comparison_photo.png",
+    "comparison_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/high_capacity_vs_base_comparison.svg"
+  }
+}

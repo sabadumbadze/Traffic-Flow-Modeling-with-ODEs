@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;">
+<text x="450.0" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">Forecasting Error across Multi-Step Horizons on Test Data</text>
+<rect x="90" y="60" width="770" height="370" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="90.0" y1="60" x2="90.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="90.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">-0.23</text>
+<line x1="218.33333333333331" y1="60" x2="218.33333333333331" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="218.33333333333331" y="450" text-anchor="middle" font-size="12" fill="#64748b">3.89</text>
+<line x1="346.66666666666663" y1="60" x2="346.66666666666663" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="346.66666666666663" y="450" text-anchor="middle" font-size="12" fill="#64748b">8.01</text>
+<line x1="475.0" y1="60" x2="475.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="475.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">12.13</text>
+<line x1="603.3333333333333" y1="60" x2="603.3333333333333" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="603.3333333333333" y="450" text-anchor="middle" font-size="12" fill="#64748b">16.24</text>
+<line x1="731.6666666666667" y1="60" x2="731.6666666666667" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="731.6666666666667" y="450" text-anchor="middle" font-size="12" fill="#64748b">20.36</text>
+<line x1="860.0" y1="60" x2="860.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="860.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">24.48</text>
+<line x1="90" y1="430.0" x2="860" y2="430.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="434.0" text-anchor="end" font-size="12" fill="#64748b">0.13</text>
+<line x1="90" y1="368.3333333333333" x2="860" y2="368.3333333333333" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="372.3333333333333" text-anchor="end" font-size="12" fill="#64748b">0.17</text>
+<line x1="90" y1="306.66666666666663" x2="860" y2="306.66666666666663" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="310.66666666666663" text-anchor="end" font-size="12" fill="#64748b">0.20</text>
+<line x1="90" y1="245.0" x2="860" y2="245.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="249.0" text-anchor="end" font-size="12" fill="#64748b">0.24</text>
+<line x1="90" y1="183.33333333333334" x2="860" y2="183.33333333333334" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="187.33333333333334" text-anchor="end" font-size="12" fill="#64748b">0.27</text>
+<line x1="90" y1="121.66666666666663" x2="860" y2="121.66666666666663" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="125.66666666666663" text-anchor="end" font-size="12" fill="#64748b">0.31</text>
+<line x1="90" y1="60.0" x2="860" y2="60.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="64.0" text-anchor="end" font-size="12" fill="#64748b">0.34</text>
+<text x="475.0" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Forecast Horizon (hours)</text>
+<text transform="rotate(-90)" x="-245.0" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Mean Absolute Error (MAE)</text>
+<polyline fill="none" stroke="#3b82f6" stroke-width="2.2" points="104.8,413.2 112.6,304.9 128.2,180.5 159.4,100.8 221.7,76.8 471.1,92.1 845.2,79.5"/>
+<circle cx="104.8" cy="413.2" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="112.6" cy="304.9" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="128.2" cy="180.5" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="159.4" cy="100.8" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="221.7" cy="76.8" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="471.1" cy="92.1" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="845.2" cy="79.5" r="4" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<polyline fill="none" stroke="#10b981" stroke-width="2.2" points="104.8,376.7 112.6,270.6 128.2,161.7 159.4,102.3 221.7,87.4 471.1,102.5 845.2,90.9"/>
+<rect x="101.3" y="373.2" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="109.1" y="267.1" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="124.7" y="158.2" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="155.9" y="98.8" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="218.2" y="83.9" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="467.6" y="99.0" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="841.7" y="87.4" width="7" height="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<polyline fill="none" stroke="#ef4444" stroke-width="2.0" stroke-dasharray="6,4" points="104.8,199.3 112.6,241.1 128.2,132.4 159.4,100.5 221.7,92.2 471.1,106.0 845.2,97.2"/>
+<rect x="105" y="75" width="162" height="76" fill="#ffffff" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="1" rx="4"/>
+<line x1="115" y1="87" x2="140" y2="87" stroke="#3b82f6" stroke-width="2.5"/>
+<circle cx="127.5" cy="87" r="3" fill="#3b82f6"/>
+<text x="150" y="91" font-size="12" fill="#334155">Implicit Euler</text>
+<line x1="115" y1="109" x2="140" y2="109" stroke="#10b981" stroke-width="2.5"/>
+<rect x="124.5" y="106" width="6" height="6" fill="#10b981"/>
+<text x="150" y="113" font-size="12" fill="#334155">RK4 Integrator</text>
+<line x1="115" y1="131" x2="140" y2="131" stroke="#ef4444" stroke-width="2.5" stroke-dasharray="4,2"/>
+<text x="150" y="135" font-size="12" fill="#334155">Explicit Euler</text>
+</svg>

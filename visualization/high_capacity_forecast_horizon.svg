@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" width="900" height="500" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;">
+<text x="450.0" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">High-Capacity Model: Multi-Step Forecast Error Growth on Unseen Data</text>
+<rect x="90" y="60" width="770" height="370" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="90.0" y1="60" x2="90.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="90.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">-0.23</text>
+<line x1="218.33333333333331" y1="60" x2="218.33333333333331" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="218.33333333333331" y="450" text-anchor="middle" font-size="12" fill="#64748b">3.89</text>
+<line x1="346.66666666666663" y1="60" x2="346.66666666666663" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="346.66666666666663" y="450" text-anchor="middle" font-size="12" fill="#64748b">8.01</text>
+<line x1="475.0" y1="60" x2="475.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="475.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">12.13</text>
+<line x1="603.3333333333333" y1="60" x2="603.3333333333333" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="603.3333333333333" y="450" text-anchor="middle" font-size="12" fill="#64748b">16.24</text>
+<line x1="731.6666666666667" y1="60" x2="731.6666666666667" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="731.6666666666667" y="450" text-anchor="middle" font-size="12" fill="#64748b">20.36</text>
+<line x1="860.0" y1="60" x2="860.0" y2="430" stroke="#e2e8f0" stroke-width="1"/>
+<text x="860.0" y="450" text-anchor="middle" font-size="12" fill="#64748b">24.48</text>
+<line x1="90" y1="430.0" x2="860" y2="430.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="434.0" text-anchor="end" font-size="12" fill="#64748b">0.10</text>
+<line x1="90" y1="368.33333333333337" x2="860" y2="368.33333333333337" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="372.33333333333337" text-anchor="end" font-size="12" fill="#64748b">0.11</text>
+<line x1="90" y1="306.6666666666667" x2="860" y2="306.6666666666667" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="310.6666666666667" text-anchor="end" font-size="12" fill="#64748b">0.11</text>
+<line x1="90" y1="244.99999999999997" x2="860" y2="244.99999999999997" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="248.99999999999997" text-anchor="end" font-size="12" fill="#64748b">0.12</text>
+<line x1="90" y1="183.33333333333343" x2="860" y2="183.33333333333343" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="187.33333333333343" text-anchor="end" font-size="12" fill="#64748b">0.13</text>
+<line x1="90" y1="121.66666666666674" x2="860" y2="121.66666666666674" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="125.66666666666674" text-anchor="end" font-size="12" fill="#64748b">0.14</text>
+<line x1="90" y1="60.0" x2="860" y2="60.0" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="64.0" text-anchor="end" font-size="12" fill="#64748b">0.14</text>
+<text x="475.0" y="480" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Forecast Horizon (hours)</text>
+<text transform="rotate(-90)" x="-245.0" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Mean Absolute Error (MAE)</text>
+<polyline fill="none" stroke="#10b981" stroke-width="2.5" points="104.8,413.2 112.6,280.9 128.2,160.9 159.4,118.7 221.7,110.8 471.1,94.7 845.2,76.8"/>
+<circle cx="104.8" cy="413.2" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="112.6" cy="280.9" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="128.2" cy="160.9" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="159.4" cy="118.7" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="221.7" cy="110.8" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="471.1" cy="94.7" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="845.2" cy="76.8" r="4" fill="#10b981" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="105" y="75" width="258" height="32" fill="#ffffff" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="1" rx="4"/>
+<line x1="115" y1="87" x2="140" y2="87" stroke="#10b981" stroke-width="2.5"/>
+<circle cx="127.5" cy="87" r="3" fill="#10b981"/>
+<text x="150" y="91" font-size="12" fill="#334155">High-Capacity 16-Param RK4</text>
+</svg>

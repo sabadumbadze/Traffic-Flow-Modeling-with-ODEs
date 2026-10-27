@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" style="background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;">
+<text x="450.0" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">Order-of-Accuracy Convergence: Global Error vs Step Size h (Log-Log)</text>
+<rect x="90" y="60" width="770" height="390" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="349.17581912478033" y1="60" x2="349.17581912478033" y2="450" stroke="#e2e8f0" stroke-width="1"/>
+<text x="349.17581912478033" y="470" text-anchor="middle" font-size="12" fill="#64748b">10^-2</text>
+<line x1="714.5879095623901" y1="60" x2="714.5879095623901" y2="450" stroke="#e2e8f0" stroke-width="1"/>
+<text x="714.5879095623901" y="470" text-anchor="middle" font-size="12" fill="#64748b">10^-1</text>
+<line x1="90" y1="281.82667091745606" x2="860" y2="281.82667091745606" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="285.82667091745606" text-anchor="end" font-size="12" fill="#64748b">10^-3</text>
+<line x1="90" y1="110.51157607564068" x2="860" y2="110.51157607564068" stroke="#e2e8f0" stroke-width="1"/>
+<text x="80" y="114.51157607564068" text-anchor="end" font-size="12" fill="#64748b">10^-2</text>
+<text x="475.0" y="500" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Step Size h (hours)</text>
+<text transform="rotate(-90)" x="-255.0" y="30" text-anchor="middle" font-size="14" font-weight="600" fill="#334155">Global L2 Error vs DP5(4) Reference</text>
+<polyline fill="none" stroke="#ef4444" stroke-width="2.2" points="860.0,60.0 750.0,133.1 640.0,188.8 530.0,242.1 420.0,294.5 310.0,346.4 200.0,398.2 90.0,449.8"/>
+<circle cx="860.0" cy="60.0" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="750.0" cy="133.1" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="640.0" cy="188.8" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="530.0" cy="242.1" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="420.0" cy="294.5" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="310.0" cy="346.4" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="200.0" cy="398.2" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<circle cx="90.0" cy="449.8" r="4" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
+<polyline fill="none" stroke="#3b82f6" stroke-width="2.2" points="860.0,97.7 750.0,145.4 640.0,194.7 530.0,245.0 420.0,295.9 310.0,347.1 200.0,398.5 90.0,450.0"/>
+<rect x="856.5" y="94.2" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="746.5" y="141.9" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="636.5" y="191.2" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="526.5" y="241.5" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="416.5" y="292.4" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="306.5" y="343.6" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="196.5" y="395.0" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="86.5" y="446.5" width="7" height="7" fill="#3b82f6" stroke="#ffffff" stroke-width="1.5"/>
+<polyline fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6,4" points="860.0,60.0 750.0,111.6 640.0,163.1 530.0,214.7 420.0,266.3 310.0,317.9 200.0,369.4 90.0,421.0"/>
+<rect x="105" y="75" width="298" height="76" fill="#ffffff" fill-opacity="0.9" stroke="#cbd5e1" stroke-width="1" rx="4"/>
+<line x1="115" y1="87" x2="140" y2="87" stroke="#ef4444" stroke-width="2.5"/>
+<circle cx="127.5" cy="87" r="3" fill="#ef4444"/>
+<text x="150" y="91" font-size="12" fill="#334155">Explicit Euler (Slope p ≈ 1.00)</text>
+<line x1="115" y1="109" x2="140" y2="109" stroke="#3b82f6" stroke-width="2.5"/>
+<rect x="124.5" y="106" width="6" height="6" fill="#3b82f6"/>
+<text x="150" y="113" font-size="12" fill="#334155">Implicit Euler (Slope p ≈ 1.00)</text>
+<line x1="115" y1="131" x2="140" y2="131" stroke="#64748b" stroke-width="2.5" stroke-dasharray="4,2"/>
+<text x="150" y="135" font-size="12" fill="#334155">Theoretical O(h^1) Reference</text>
+</svg>

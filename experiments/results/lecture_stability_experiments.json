@@ -1,0 +1,133 @@
+{
+  "test_equation": {
+    "h_0.05": {
+      "h": 0.05,
+      "factor_explicit": 0.5,
+      "factor_implicit": 0.6666666666666666,
+      "stable_explicit": true,
+      "monotonic_explicit": true
+    },
+    "h_0.15": {
+      "h": 0.15,
+      "factor_explicit": -0.5,
+      "factor_implicit": 0.4,
+      "stable_explicit": true,
+      "monotonic_explicit": false
+    },
+    "h_0.25": {
+      "h": 0.25,
+      "factor_explicit": -1.5,
+      "factor_implicit": 0.2857142857142857,
+      "stable_explicit": false,
+      "monotonic_explicit": false
+    }
+  },
+  "stiff_benchmark": {
+    "h_crit": 0.04,
+    "runs": {
+      "h_0.03": {
+        "h": 0.03,
+        "max_err_explicit": 0.7231256603509255,
+        "max_err_implicit": 0.1768662401755598
+      },
+      "h_0.05": {
+        "h": 0.05,
+        "max_err_explicit": 129.74683513834938,
+        "max_err_implicit": 0.20361738530440693
+      }
+    }
+  },
+  "traffic_stability": {
+    "stability_table": [
+      {
+        "flow_level": 0.0,
+        "rates": [
+          3.111091282042941,
+          2.2414339845150555,
+          2.2044985959411507
+        ],
+        "max_decay_rate": 3.111091282042941,
+        "h_crit_hours": 0.6428612402162216,
+        "h_crit_minutes": 38.571674412973294,
+        "stiffness_ratio": 1.4112466607014305
+      },
+      {
+        "flow_level": 0.5,
+        "rates": [
+          3.960596060393272,
+          2.6480959637179655,
+          2.2044985959411507
+        ],
+        "max_decay_rate": 3.960596060393272,
+        "h_crit_hours": 0.5049744961371818,
+        "h_crit_minutes": 30.29846976823091,
+        "stiffness_ratio": 1.7965972251855318
+      },
+      {
+        "flow_level": 1.0,
+        "rates": [
+          4.810100838743603,
+          3.054757942920876,
+          2.2044985959411507
+        ],
+        "max_decay_rate": 4.810100838743603,
+        "h_crit_hours": 0.41579169897868495,
+        "h_crit_minutes": 24.947501938721096,
+        "stiffness_ratio": 2.181947789669633
+      },
+      {
+        "flow_level": 1.5,
+        "rates": [
+          5.659605617093934,
+          3.4614199221237865,
+          2.2044985959411507
+        ],
+        "max_decay_rate": 5.659605617093934,
+        "h_crit_hours": 0.35338151371525245,
+        "h_crit_minutes": 21.202890822915148,
+        "stiffness_ratio": 2.5672983541537344
+      }
+    ],
+    "normal_step_hours": 0.25,
+    "is_normal_step_stable": true
+  },
+  "errors_and_gronwall": {
+    "steps": [
+      {
+        "h": 0.5,
+        "max_lte": 0.10653065971263342,
+        "gte": 0.0728352832366127,
+        "residual_error": 0.0,
+        "gronwall_bound": 1.5972640247326626
+      },
+      {
+        "h": 0.25,
+        "max_lte": 0.02880078307140488,
+        "gte": 0.0352223681975502,
+        "residual_error": 0.0,
+        "gronwall_bound": 0.7986320123663313
+      },
+      {
+        "h": 0.125,
+        "max_lte": 0.007496902584595455,
+        "gte": 0.017268196215363907,
+        "residual_error": 0.0,
+        "gronwall_bound": 0.39931600618316565
+      },
+      {
+        "h": 0.0625,
+        "max_lte": 0.0019130628134758076,
+        "gte": 0.008546496859612368,
+        "residual_error": 4.440892098500626e-16,
+        "gronwall_bound": 0.19965800309158283
+      },
+      {
+        "h": 0.03125,
+        "max_lte": 0.00048323447634412986,
+        "gte": 0.004251250758137648,
+        "residual_error": 1.5543122344752192e-15,
+        "gronwall_bound": 0.09982900154579141
+      }
+    ]
+  }
+}

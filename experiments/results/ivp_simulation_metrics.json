@@ -1,0 +1,25 @@
+{
+  "n_steps": 96,
+  "duration_hours": 24.0,
+  "metrics": {
+    "explicit": {
+      "mae": 0.2694551283549502,
+      "rmse": 0.3936596277598912,
+      "max_error": 1.3484856234744051
+    },
+    "implicit": {
+      "mae": 0.2811775944703506,
+      "rmse": 0.40598614884514245,
+      "max_error": 1.3657270249893
+    },
+    "rk4": {
+      "mae": 0.27498006090058036,
+      "rmse": 0.3992161378125915,
+      "max_error": 1.354813369752177
+    }
+  },
+  "artifacts": {
+    "png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/ivp_simulation_photo.png",
+    "svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/ivp_simulation_photo.svg"
+  }
+}

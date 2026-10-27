@@ -1,0 +1,111 @@
+{
+  "title": "1,000-Epoch Traffic Flow ODE Optimization on Maximal Full Dataset",
+  "dataset_scope": "100% of observations (2,101 steps / 525.2 hours / 5 complete weeks)",
+  "epochs": 1000,
+  "parameters": {
+    "alpha1": 7.918702318702832,
+    "alpha2": 5.025925602091118,
+    "alpha3": 0.21149010842424426,
+    "beta1": 0.0,
+    "beta2": 2.0875933997282603,
+    "beta3": 0.0,
+    "delta1": 0.0,
+    "delta2": 0.0,
+    "delta3": 0.01462615861630457,
+    "gamma1": 0.0,
+    "gamma2": 0.0,
+    "kappa2": 3.2895801498944235,
+    "kappa3": 4.469707250840959,
+    "c1": 0.2353670629582172,
+    "c2": -1.03004623335097,
+    "c3": 0.3539079371977864
+  },
+  "training_time_sec": 616.19,
+  "best_loss": 0.013301198541427452,
+  "grand_multi_week_mae": 0.09063294612613321,
+  "grand_multi_week_rmse": 0.12394714915845487,
+  "max_error": 1.277826321904527,
+  "week_metrics": [
+    {
+      "week": 1,
+      "steps": 480,
+      "hours": 120.0,
+      "mae": 0.08158925497622076,
+      "rmse": 0.10907486049412142,
+      "max_err": 0.6204873987017632
+    },
+    {
+      "week": 2,
+      "steps": 480,
+      "hours": 120.0,
+      "mae": 0.09166640557687056,
+      "rmse": 0.12673382397088734,
+      "max_err": 1.277826321904527
+    },
+    {
+      "week": 3,
+      "steps": 480,
+      "hours": 120.0,
+      "mae": 0.09476799779893597,
+      "rmse": 0.1378639135578871,
+      "max_err": 0.9840865682999125
+    },
+    {
+      "week": 4,
+      "steps": 480,
+      "hours": 120.0,
+      "mae": 0.09406651855070534,
+      "rmse": 0.12267169488507017,
+      "max_err": 0.5978675215333735
+    },
+    {
+      "week": 5,
+      "steps": 181,
+      "hours": 45.25,
+      "mae": 0.09180406020825517,
+      "rmse": 0.11778153057144378,
+      "max_err": 0.528879441936495
+    }
+  ],
+  "forecast_horizons": {
+    "horizon_1_steps": {
+      "steps": 1,
+      "minutes": 15.0,
+      "hours": 0.25,
+      "mae": 0.08887468191422732
+    },
+    "horizon_2_steps": {
+      "steps": 2,
+      "minutes": 30.0,
+      "hours": 0.5,
+      "mae": 0.08918776884549351
+    },
+    "horizon_4_steps": {
+      "steps": 4,
+      "minutes": 60.0,
+      "hours": 1.0,
+      "mae": 0.08658008912207646
+    },
+    "horizon_16_steps": {
+      "steps": 16,
+      "minutes": 240.0,
+      "hours": 4.0,
+      "mae": 0.08759310601872505
+    },
+    "horizon_96_steps": {
+      "steps": 96,
+      "minutes": 1440.0,
+      "hours": 24.0,
+      "mae": 0.08901275357801376
+    }
+  },
+  "artifacts": {
+    "multi_week_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_multi_week_photo.png",
+    "ivp_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_ivp_photo.png",
+    "ivp_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_ivp_photo.svg",
+    "basin_png": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_basin_photo.png",
+    "basin_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_basin_photo.svg",
+    "forecast_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_forecast_horizon.svg",
+    "convergence_svg": "/home/saba/Desktop/5 semester/Scientific compution/Projects/visualization/full_data_1000ep_training_convergence.svg"
+  }
+}

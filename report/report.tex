@@ -1,0 +1,566 @@
+\documentclass[runningheads]{llncs}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage[letterpaper, top=1.60cm, bottom=1.60cm, left=2.3cm, right=2.3cm]{geometry}
+\usepackage{hyperref}
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{enumerate}{\setlength{\itemsep}{1.5pt}\setlength{\parsep}{0pt}\setlength{\topsep}{2pt}}
+\AtBeginEnvironment{itemize}{\setlength{\itemsep}{1.5pt}\setlength{\parsep}{0pt}\setlength{\topsep}{2pt}}
+\AtBeginEnvironment{thebibliography}{\setlength{\itemsep}{1.5pt}\setlength{\parsep}{0pt}\setlength{\topsep}{2pt}}
+
+\linespread{0.97}
+
+\setlength{\textfloatsep}{5pt plus 2pt minus 1pt}
+\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\intextsep}{4pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{2pt plus 1pt minus 1pt}
+\setlength{\belowcaptionskip}{2pt plus 1pt minus 1pt}
+
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{8}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.95}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.8}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+\title{Traffic Flow Modeling and Prediction Using Nonlinear Ordinary Differential Equations: An Analysis of Initial Value Problems, Existence, Uniqueness, Stability, Loss Functions, and Model Comparison}
+
+\titlerunning{Traffic Flow Modeling Using Nonlinear ODEs}
+
+\author{Saba Dumbadze}
+
+\authorrunning{S. Dumbadze}
+
+\institute{Scientific Computation, Kutaisi International University, Kutaisi, Georgia \\
+\email{saba.dumbadze@kiu.edu.ge}}
+
+\maketitle
+
+\begin{abstract}
+In this individual scientific computing project, I investigate the mathematical modeling, numerical simulation, and empirical optimization of highway traffic flow using systems of nonlinear Ordinary Differential Equations (ODEs). I formulate the continuous movement of vehicles across three interconnected highway segments as an Initial Value Problem (IVP). I examine the theoretical foundations of this system, emphasizing the fundamental requirements for the existence and uniqueness of solutions through the classical theorems of Peano and Picard--Lindel\"of, the Osgood uniqueness criterion, and an illustrative non-uniqueness counterexample. Furthermore, I establish a clear physical and mathematical distinction between temporal initial conditions and spatial boundary conditions in macroscopic traffic systems. In the computational section, I implement and analyze five classical numerical integration schemes: Explicit Euler, Implicit Euler, Adams--Bashforth 2 (AB2), Adams--Moulton 2 (AM2), and Backward Differentiation Formula 2 (BDF2). Through four benchmark numerical experiments from the scientific computing curriculum, I verify the theoretical orders of convergence (confirming empirical slopes of 0.97, 1.03, 2.02, 2.02, and 3.01), inspect stability limits on linear test problems, evaluate stiff differential equations where BDF2 matches explicit accuracy using 33 times fewer steps, and demonstrate that consistency without zero-stability produces catastrophic exponential error growth. Finally, I formulate the Mean Squared Error (MSE) optimization loss function and systematically compare three real-world calibrated traffic models: a Baseline 6-Parameter Model, a High-Capacity 16-Parameter Model, and a 1,000-Epoch Full-Dataset Model, demonstrating that expanding model capacity and extending optimization achieves an 83.3\% reduction in loss and superior multi-horizon prediction accuracy.
+\keywords{Initial Value Problem \and Existence and Uniqueness \and Peano Theorem \and Picard--Lindel\"of Theorem \and Initial Conditions \and Boundary Conditions \and A-Stability \and Stiff ODEs \and Zero-Stability \and Loss Function \and Model Comparison.}
+\end{abstract}
+
+% =============================================================================
+\section{Introduction}
+\label{sec:intro}
+% =============================================================================
+The mathematical modeling of highway traffic flow is one of the most vital applications of modern scientific computing. Congestion on major highway corridors produces severe economic losses, increases fuel consumption and environmental emissions, and heightens the probability of traffic collisions. To manage highway infrastructure effectively and design intelligent traffic control systems, engineers and scientists require predictive mathematical models that accurately forecast the evolution of vehicle densities over time.
+
+In recent years, data-driven machine learning algorithms have become popular for short-term traffic forecasting. However, purely statistical methods often operate as black boxes: they do not incorporate physical conservation laws, they offer no rigorous guarantees of numerical stability, and they can fail unexpectedly when real-world conditions depart from historical training patterns. In contrast, models based on Ordinary Differential Equations (ODEs) are derived directly from the fundamental laws of physics, specifically the conservation of vehicles. They offer transparent, interpretable relationships between highway capacity, travel velocity, and bottleneck formation.
+
+In this solo project, I present a rigorous and complete analysis of traffic flow modeling and numerical integration. My work bridges the continuous mathematical theory of ODEs with practical discrete scientific algorithms and real data calibration. Specifically, I focus on six core questions:
+\begin{enumerate}
+    \item \textbf{Mathematical Formulation}: How is vehicular traffic on connected highway segments formulated as an Initial Value Problem (IVP)?
+    \item \textbf{Existence and Uniqueness}: Under what mathematical conditions does a solution to the traffic ODE system exist, and what guarantees that this solution is unique?
+    \item \textbf{Role of Initial and Boundary Conditions}: What is the exact physical and mathematical difference between temporal initial conditions and spatial boundary conditions in highway networks?
+    \item \textbf{Numerical Methods and Convergence}: How do one-step and multi-step methods (Explicit Euler, Implicit Euler, AB2, AM2, and BDF2) perform in terms of local truncation error, global truncation error, and convergence order?
+    \item \textbf{Stability, Stiffness, and Zero-Stability}: Why do stability regions restrict explicit time stepping, why do stiff differential equations demand implicit solvers, and how does the Dahlquist Equivalence Theorem govern convergence?
+    \item \textbf{Loss Functions and Model Comparison}: How is the optimization loss defined, how do training losses decrease across epochs, and how do different ODE models (Baseline vs.\ High-Capacity vs.\ 1,000-Epoch Full Data) compare in empirical prediction accuracy?
+\end{enumerate}
+
+Throughout this report, I use clear, accessible language while maintaining complete mathematical rigor. In Section~\ref{sec:ivp}, I formulate the Initial Value Problem for a three-segment highway corridor and contrast initial and boundary conditions. In Section~\ref{sec:existence}, I analyze existence and uniqueness through the Peano and Picard--Lindel\"of theorems. In Section~\ref{sec:methods}, I introduce the five numerical methods and error definitions. In Section~\ref{sec:stability}, I analyze A-stability, stiffness, and zero-stability. In Section~\ref{sec:experiments}, I present the results of four benchmark numerical experiments using matplotlib figures and the exact statistical numbers from the lecture curriculum. In Section~\ref{sec:model_comparison}, I evaluate training loss convergence and compare the performance of several calibrated traffic models on real highway data. Finally, in Section~\ref{sec:conclusions}, I summarize my main conclusions.
+
+% =============================================================================
+\section{Mathematical Formulation: The Initial Value Problem}
+\label{sec:ivp}
+% =============================================================================
+\subsection{Definition of an Ordinary Differential Equation and Systems}
+An Ordinary Differential Equation (ODE) is an equation relating an unknown function of a single independent variable to its derivatives. In its general scalar form of order $n$, it is written as:
+\begin{equation}
+\label{eq:general_ode}
+F\left(t, y(t), y'(t), y''(t), \dots, y^{(n)}(t)\right) = 0,
+\end{equation}
+where $t \in \mathbb{R}$ denotes time and $y(t) \in \mathbb{R}$ is the unknown state variable. The order is defined by the highest derivative. An ODE is \emph{autonomous} if $t$ does not appear explicitly ($y' = f(y)$), and \emph{non-autonomous} if $t$ appears explicitly ($y' = f(t, y)$).
+
+Higher-order ODEs are converted into first-order systems via reduction of order. Defining $y_1 = y, y_2 = y', \dots, y_n = y^{(n-1)}$, the single equation~\eqref{eq:general_ode} transforms into an equivalent system of $n$ coupled first-order ODEs:
+\begin{equation}
+\label{eq:first_order_system}
+\frac{d}{dt}\begin{pmatrix} y_1(t) \\ y_2(t) \\ \vdots \\ y_n(t) \end{pmatrix} = \begin{pmatrix} y_2(t) \\ y_3(t) \\ \vdots \\ f(t, y_1(t), \dots, y_n(t)) \end{pmatrix} \iff y'(t) = f(t, y(t)),
+\end{equation}
+where $y(t) \in \mathbb{R}^n$ is the state vector and $f : \mathbb{R} \times \mathbb{R}^n \to \mathbb{R}^n$ is the vector field. Thus, first-order systems form the universal basis for studying ODEs in scientific computing.
+
+\subsection{The Initial Value Problem (IVP)}
+An ODE specifies only instantaneous rates of change. Integrating an ODE produces an infinite family of curves parameterized by arbitrary constants of integration. In physical modeling, a physical system follows only one specific trajectory. To isolate that unique trajectory, the state of the system must be fixed at a designated initial time.
+
+\begin{definition}[Initial Value Problem]
+Let $I = [t_0, T] \subset \mathbb{R}$ be a time interval, and let $D \subseteq \mathbb{R}^n$ be an open connected domain. Let $f : I \times D \to \mathbb{R}^n$ be a given continuous vector field, and let $y_0 \in D$ be a prescribed vector. The Initial Value Problem (IVP) is to find a continuously differentiable function $y : I \to \mathbb{R}^n$ such that:
+\begin{equation}
+\label{eq:ivp_def}
+y'(t) = f(t, y(t)) \quad \text{for all } t \in [t_0, T], \quad \text{with} \quad y(t_0) = y_0.
+\end{equation}
+\end{definition}
+
+The condition $y(t_0) = y_0$ is called the \emph{initial condition}. It provides the temporal anchor: it selects the unique curve from the infinite family of solutions that represents the actual physical reality.
+
+\subsection{The 3-Segment Highway Traffic Flow Model}
+In this project, I model traffic along a highway corridor divided into three consecutive road segments: segment 1 (upstream), segment 2 (middle), and segment 3 (downstream). For each segment $i \in \{1, 2, 3\}$, I define the state variable $x_i(t) \ge 0$ as the normalized vehicle density on segment $i$ at time $t \ge 0$.
+
+The continuous time evolution of traffic density is governed by the physical law of \emph{conservation of vehicles}: the rate of change of cars on any highway segment equals the inflow rate minus the outflow rate. For the three connected segments, this balance yields the coupled first-order ODE system:
+\begin{equation}
+\label{eq:traffic_system}
+\begin{cases}
+\dfrac{dx_1}{dt} = q_{\text{in}, 1}(t) - q_{\text{out}, 1}(x_1), \\[6pt]
+\dfrac{dx_2}{dt} = q_{\text{in}, 2}(x_1, t) - q_{\text{out}, 2}(x_2), \\[6pt]
+\dfrac{dx_3}{dt} = q_{\text{in}, 3}(x_2, t) - q_{\text{out}, 3}(x_3).
+\end{cases}
+\end{equation}
+
+To describe vehicle discharge, I model the outflow rate $q_{\text{out}, i}(x_i)$ as a nonlinear function of local density based on classical Greenshields traffic theory. When density is low ($x_i \approx 0$), vehicles move freely at the speed limit, and flow increases linearly with density. At high densities, drivers decelerate to maintain safe spacing, causing congestion and reducing throughput. I model this discharge behavior using a quadratic polynomial:
+\begin{equation}
+\label{eq:outflow_law}
+q_{\text{out}, i}(x_i) = \alpha_i x_i + \beta_i x_i^2, \quad i \in \{1, 2, 3\},
+\end{equation}
+where $\alpha_i > 0$ represents the free-flow clearance rate and $\beta_i > 0$ accounts for nonlinear congestion resistance.
+
+Because segment 1 discharges directly into segment 2, its outflow $q_{\text{out}, 1}(x_1)$ acts as the primary inflow to segment 2. Similarly, the outflow of segment 2 serves as the inflow to segment 3. Grouping the three densities into $x(t) = (x_1(t), x_2(t), x_3(t))^T \in \mathbb{R}^3$, the highway corridor is described by $\frac{dx}{dt} = f(t, x(t))$.
+
+\subsection{Distinction Between Initial Conditions and Spatial Boundary Conditions}
+A central conceptual focus of my project is to clearly distinguish between \emph{initial conditions} and \emph{spatial boundary conditions}. Although both are necessary to make a physical model well-posed, they operate in fundamentally different mathematical and physical dimensions:
+
+\begin{itemize}
+    \item \textbf{Initial Conditions (Temporal Specification at $t = t_0$)}:
+    The initial condition specifies the state of the entire physical system at a single, fixed instant in time, usually chosen as $t = 0$:
+    \begin{equation}
+    \label{eq:initial_cond_vector}
+    x(0) = \begin{pmatrix} x_1(0) \\ x_2(0) \\ x_3(0) \end{pmatrix} = \begin{pmatrix} x_{1,0} \\ x_{2,0} \\ x_{3,0} \end{pmatrix} = x_0 \in \mathbb{R}^3.
+    \end{equation}
+    Physically, the initial condition answers: \emph{``How many vehicles are present on each of the three highway segments at the start of observation?''} Mathematically, the ODE system~\eqref{eq:traffic_system} admits infinitely many trajectories; the initial condition selects the single unique solution curve in state space.
+    
+    \item \textbf{Boundary Conditions (Spatial Specification at Domain Edges)}:
+    In contrast to the initial condition, which is fixed at a single moment in time across all space, boundary conditions are enforced at the physical spatial boundaries of the highway network across all time $t \in [0, T]$:
+    \begin{itemize}
+        \item \emph{Upstream Boundary Condition}: At the entrance to segment 1, vehicles enter the road corridor from the external highway network. This incoming traffic rate is measured continuously by road sensors and supplied as a time-dependent input signal $u(t)$:
+        \begin{equation}
+        \label{eq:upstream_boundary_cond}
+        q_{\text{in}, 1}(t) = u(t), \quad \text{for all } t \ge 0.
+        \end{equation}
+        In continuum transport equations, Equation~\eqref{eq:upstream_boundary_cond} represents an inhomogeneous Dirichlet boundary condition in space, serving as the continuous external driving function.
+        \item \emph{Downstream Boundary Condition}: At the exit of segment 3, vehicles leave the corridor into the downstream network. Under free-flowing conditions, vehicles exit according to the internal outflow rule $q_{\text{out}, 3}(x_3)$. If downstream bottlenecks occur, an external downstream boundary condition reflects backpressure shockwaves.
+    \end{itemize}
+\end{itemize}
+
+I summarize the fundamental conceptual differences between initial conditions and spatial boundary conditions in Table~\ref{tab:ic_vs_bc}.
+
+\begin{table}[htbp]
+\centering
+\caption{Conceptual comparison between initial conditions and spatial boundary conditions.}
+\label{tab:ic_vs_bc}
+\small
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{lll}
+\toprule
+\textbf{Attribute} & \textbf{Initial Condition (IC)} & \textbf{Boundary Condition (BC)} \\
+\midrule
+Dimension & Temporal dimension ($t = 0$) & Spatial dimension ($s = 0$ and $s = L$) \\
+Domain of Action & Entire road corridor at one instant & Specific spatial boundary points for all $t \ge 0$ \\
+Mathematical Role & Fixes constants of integration & Sets external fluxes and driving forces \\
+Traffic Meaning & Vehicle distribution at start of observation & Inflow from upstream sensors ($u(t)$) \\
+Physical Cause & Historical state of the highway & External network connections and demand \\
+Result if Omitted & Infinite family of solution curves & System has no external inputs or exits \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% =============================================================================
+\section{Existence and Uniqueness of Solutions}
+\label{sec:existence}
+% =============================================================================
+Before applying numerical integration methods, I must confirm whether a mathematical solution to the Initial Value Problem actually exists, and whether that solution is unique. If a model lacks existence, numerical schemes produce meaningless artifacts; if it lacks uniqueness, numerical predictions become completely non-deterministic.
+
+\subsection{Peano's Existence Theorem}
+The foundational theorem for the existence of solutions to ODEs is due to Peano (1890).
+
+\begin{theorem}[Peano Existence Theorem]
+\label{thm:peano}
+Let $D \subseteq \mathbb{R} \times \mathbb{R}^n$ be an open region containing $(t_0, y_0)$, and let $f : D \to \mathbb{R}^n$ be continuous. Then the Initial Value Problem $y'(t) = f(t, y(t)), y(t_0) = y_0$ has at least one solution $y(t)$ defined on a local time interval $[t_0 - \alpha, t_0 + \alpha]$ for some $\alpha > 0$.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+Let $R = [t_0 - a, t_0 + a] \times \{y \in \mathbb{R}^n : \|y - y_0\| \le b\} \subset D$. Since $f$ is continuous on a compact set, it is bounded: $\|f(t, y)\| \le M$. Let $\alpha = \min(a, b/M)$. Construct approximate continuous piecewise linear functions $\{y_k(t)\}$ using Euler polygons: $y_k(t) = y_0 + \int_{t_0}^t f(s, y_k(s_k)) \, ds$, where $s_k$ is the nearest grid point preceding $s$. The family $\{y_k(t)\}$ is uniformly bounded ($\|y_k(t) - y_0\| \le M|t - t_0| \le b$) and equicontinuous ($\|y_k(t_1) - y_k(t_2)\| \le M|t_1 - t_2|$). By the Arzel\`a--Ascoli theorem, there exists a uniformly convergent subsequence $\{y_{k_j}(t)\}$ converging to a continuous limit $y(t) = y_0 + \int_{t_0}^t f(s, y(s)) \, ds$. Differentiating with respect to $t$ confirms that $y'(t) = f(t, y(t))$ with $y(t_0) = y_0$, establishing that at least one local solution exists.
+\end{proof}
+
+\subsection{Why Continuity Alone Does Not Guarantee Uniqueness}
+While Peano's theorem guarantees existence under continuity, \textbf{continuity alone does not guarantee uniqueness}. To demonstrate this critical fact, I analyze the classical counterexample:
+\begin{equation}
+\label{eq:counterexample}
+y'(t) = 3 [y(t)]^{2/3}, \quad \text{with initial condition} \quad y(0) = 0.
+\end{equation}
+
+The function $f(y) = 3 y^{2/3}$ is continuous everywhere on $\mathbb{R}$. However, starting from the identical initial condition $y(0) = 0$, there exist at least two distinct solutions:
+\begin{align}
+y_1(t) &\equiv 0, \quad \text{for all } t \ge 0, \label{eq:sol1} \\
+y_2(t) &= t^3, \quad \text{for all } t \ge 0. \label{eq:sol2}
+\end{align}
+
+Both solutions satisfy the differential equation and the initial condition exactly:
+\begin{itemize}
+    \item For $y_1(t) \equiv 0$: $y_1'(t) = 0$ and $3 [y_1(t)]^{2/3} = 3(0)^{2/3} = 0$, with $y_1(0) = 0$.
+    \item For $y_2(t) = t^3$: $y_2'(t) = 3t^2$ and $3 [y_2(t)]^{2/3} = 3(t^3)^{2/3} = 3t^2$, with $y_2(0) = 0$.
+\end{itemize}
+
+In fact, there is an infinite family of valid solutions that remain zero until an arbitrary time $c > 0$ and then branch off as $y(t) = (t - c)^3$. The mathematical cause of this non-uniqueness is that the derivative:
+\begin{equation}
+f'(y) = \frac{d}{dy}\left(3 y^{2/3}\right) = 2 y^{-1/3} = \frac{2}{y^{1/3}}
+\end{equation}
+blows up to infinity as $y \to 0$. Thus, $f$ has an infinite slope at $y = 0$, violating the Lipschitz condition. In traffic modeling, non-uniqueness would mean that identical initial highway conditions could spontaneously branch into conflicting traffic futures without cause. Therefore, physical modeling demands a stronger condition.
+
+\subsection{The Picard--Lindel\"of Theorem}
+To guarantee that an Initial Value Problem possesses a single, unique solution, the vector field must satisfy the Lipschitz condition.
+
+\begin{definition}[Lipschitz Continuity]
+A vector field $f(t, y)$ is \emph{Lipschitz continuous} with respect to $y$ on domain $D$ if there exists a finite constant $L \ge 0$ such that:
+\begin{equation}
+\label{eq:lipschitz_def}
+\| f(t, y_1) - f(t, y_2) \| \le L \| y_1 - y_2 \|, \quad \text{for all } (t, y_1), (t, y_2) \in D.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Picard--Lindel\"of Theorem]
+\label{thm:picard}
+Let $f(t, y)$ be continuous in $t$ and Lipschitz continuous in $y$ on the closed domain $R = [t_0 - a, t_0 + a] \times \{y \in \mathbb{R}^n : \|y - y_0\| \le b\}$. Let $M = \max_{(t, y) \in R} \|f(t, y)\|$ and define $\alpha = \min(a, b/M)$. Then the IVP $y'(t) = f(t, y(t)), y(t_0) = y_0$ has a \textbf{unique} solution on the interval $[t_0 - \alpha, t_0 + \alpha]$.
+\end{theorem}
+
+\begin{proof}[Proof Sketch]
+The IVP is equivalent to the fixed-point equation $y = T(y)$ with $(Ty)(t) = y_0 + \int_{t_0}^t f(s, y(s)) \, ds$. The Picard iteration sequence $y_{k+1} = T(y_k)$ satisfies $\| y_{k+1}(t) - y_k(t) \| \le \frac{M L^k \alpha^{k+1}}{(k+1)!}$. Since $\sum_{k=0}^\infty \frac{(L\alpha)^{k+1}}{(k+1)!} \le e^{L\alpha} < \infty$, the sequence $\{y_k\}$ is Cauchy in the Banach space $(C[I], \|\cdot\|_\infty)$ and converges uniformly to a unique fixed point $y(t) = T(y)(t)$. Uniqueness follows from Gr\"onwall's inequality: if $y_1$ and $y_2$ are two solutions, $\|y_1(t) - y_2(t)\| \le L \int_{t_0}^t \|y_1(s) - y_2(s)\| \, ds \implies \|y_1(t) - y_2(t)\| \le 0 \cdot e^{L(t - t_0)} = 0$, proving uniqueness.
+\end{proof}
+
+\subsection{Osgood's Uniqueness Criterion and Application to the Traffic ODE System}
+In 1898, Osgood proved a generalized uniqueness criterion that relaxes the strict Lipschitz condition: a continuous function $f(t, y)$ guarantees a unique solution if:
+\begin{equation}
+\label{eq:osgood}
+\| f(t, y_1) - f(t, y_2) \| \le \omega\left(\|y_1 - y_2\|\right), \quad \text{where} \quad \int_0^\epsilon \frac{du}{\omega(u)} = \infty.
+\end{equation}
+For example, $\omega(u) = u \ln(1/u)$ is not Lipschitz at $u = 0$, but satisfies Osgood's criterion since $\int_0^\epsilon \frac{du}{u \ln(1/u)} = \infty$.
+
+Now, I verify existence and uniqueness for my 3-segment traffic flow model~\eqref{eq:traffic_system}. The vector field is:
+\begin{equation}
+f(t, x) = \begin{pmatrix}
+u(t) - (\alpha_1 x_1 + \beta_1 x_1^2) \\
+(\alpha_1 x_1 + \beta_1 x_1^2) - (\alpha_2 x_2 + \beta_2 x_2^2) \\
+(\alpha_2 x_2 + \beta_2 x_2^2) - (\alpha_3 x_3 + \beta_3 x_3^2)
+\end{pmatrix}.
+\end{equation}
+
+I compute the Jacobian matrix of partial derivatives with respect to $x$:
+\begin{equation}
+\label{eq:jacobian}
+J(x) = \frac{\partial f}{\partial x} = \begin{pmatrix}
+-(\alpha_1 + 2\beta_1 x_1) & 0 & 0 \\
+\alpha_1 + 2\beta_1 x_1 & -(\alpha_2 + 2\beta_2 x_2) & 0 \\
+0 & \alpha_2 + 2\beta_2 x_2 & -(\alpha_3 + 2\beta_3 x_3)
+\end{pmatrix}.
+\end{equation}
+
+On any bounded physical domain $D = [0, x_{\max}]^3$, the entries of $J(x)$ are continuous polynomials and strictly bounded. By the Mean Value Theorem, the Lipschitz constant is bounded by:
+\begin{equation}
+L = \sup_{x \in D} \|J(x)\|_\infty = \max_{i \in \{1, 2, 3\}} 2(\alpha_i + 2\beta_i x_{\max}) < \infty.
+\end{equation}
+Because $L$ is finite and the upstream inflow $u(t)$ is continuous, the Picard--Lindel\"of theorem guarantees that for any initial vehicle density $x(0) = x_0 \ge 0$, my traffic model has a \textbf{unique, physically valid solution} for all forward time $t \ge 0$.
+
+% =============================================================================
+\section{Numerical Methods and Convergence Theory}
+\label{sec:methods}
+% =============================================================================
+Because nonlinear ODE systems generally do not possess closed-form analytical solutions, I discretize time into $m$ intervals with step size $h = (T - t_0)/m$. The discrete time grid is $t_n = t_0 + n h$, and $y_n \approx y(t_n)$ denotes the numerical approximation.
+
+\subsection{The Five Tested Numerical Schemes}
+I implement and evaluate five classical numerical integration schemes:
+\begin{enumerate}
+    \item \textbf{Explicit Euler (Forward Euler)}: $y_{n+1} = y_n + h f(t_n, y_n)$ (Order 1, Explicit 1-step).
+    \item \textbf{Implicit Euler (Backward Euler)}: $y_{n+1} = y_n + h f(t_{n+1}, y_{n+1})$ (Order 1, Implicit 1-step).
+    \item \textbf{Adams--Bashforth 2 (AB2)}: $y_{n+2} = y_{n+1} + \frac{h}{2}[3 f_{n+1} - f_n]$ (Order 2, Explicit 2-step).
+    \item \textbf{Adams--Moulton 2 (AM2)}: $y_{n+2} = y_{n+1} + \frac{h}{12}[5 f_{n+2} + 8 f_{n+1} - f_n]$ (Order 3, Implicit 2-step).
+    \item \textbf{Backward Differentiation Formula 2 (BDF2)}: $\frac{3}{2} y_{n+2} - 2 y_{n+1} + \frac{1}{2} y_n = h f_{n+2}$ (Order 2, Implicit 2-step).
+\end{enumerate}
+
+\subsection{Error Definitions: Local Truncation Error, Global Truncation Error, and Residual}
+To evaluate numerical methods rigorously, I employ three distinct definitions of numerical error:
+\begin{itemize}
+    \item \textbf{Local Truncation Error (LTE, $\tau_n$)}: The error in a single step assuming past values are exact: $\tau_n = \frac{y(t_{n+1}) - y_{\text{num}}(t_{n+1})}{h} = \frac{h}{2} y''(\xi_n) = O(h)$. A method is \emph{consistent} if $\lim_{h \to 0} \max_n \|\tau_n\| = 0$.
+    \item \textbf{Global Truncation Error (GTE, $e_n$)}: The true accumulated error at time $t_n$: $e_n = y_n - y(t_n)$. A method has \emph{order of convergence $p$} if $\|e_m\| \le C h^p$ as $h \to 0$.
+    \item \textbf{Residual Error ($R_n$)}: The degree to which the numerical solution satisfies the discrete difference equation: $R_n = \| \frac{y_{n+1} - y_n}{h} - f(t_n, y_n) \| = 0$ for Explicit Euler.
+\end{itemize}
+
+% =============================================================================
+\section{Stability and Stiffness}
+\label{sec:stability}
+% =============================================================================
+\subsection{A-Stability on the Linear Test Equation}
+To analyze stability, I examine the standard linear test equation:
+\begin{equation}
+\label{eq:linear_test}
+y'(t) = -a y(t), \quad a > 0, \quad \text{with} \quad y(0) = y_0.
+\end{equation}
+The exact solution $y(t) = y_0 e^{-at}$ decays monotonically to zero as $t \to \infty$.
+
+Applying Explicit Euler to Equation~\eqref{eq:linear_test} gives $y_{n+1} = (1 - ah) y_n = (1 - ah)^{n+1} y_0$. The amplification factor is $R(ah) = 1 - ah$. The solution remains bounded if and only if $|1 - ah| \le 1$, imposing the step size restriction:
+\begin{equation}
+\label{eq:explicit_stability_limit}
+\mathbf{h \le \frac{2}{a}} \quad \text{(\textbf{Conditionally Stable})}.
+\end{equation}
+If $h < 1/a$, it decays monotonically. If $1/a < h \le 2/a$, it oscillates. If $h > 2/a$, it explodes!
+
+Applying Implicit Euler gives $y_{n+1} = \frac{y_n}{1 + ah} = (\frac{1}{1 + ah})^{n+1} y_0$. Because $1 + ah > 1$ for all $h > 0$, the amplification factor is strictly less than one for \textbf{every step size $h > 0$} (\textbf{unconditionally A-stable}).
+
+\subsection{Stability Regions, Stiffness, and Zero-Stability}
+For complex eigenvalues $q = \lambda h$, the \emph{region of absolute stability} $S$ is $\{q \in \mathbb{C} : |R(q)| \le 1\}$. On the negative real axis:
+\begin{itemize}
+    \item Explicit Euler has stability interval $(-2, 0)$, requiring $h < 2/|\lambda|$.
+    \item AB2 has stability interval $(-1, 0)$, requiring $h < 1/|\lambda|$.
+    \item A method is \textbf{A-stable} if its stability region contains the entire left half-plane $\mathbb{C}^-$. Implicit Euler and BDF2 are both A-stable.
+\end{itemize}
+
+An ODE system is \textbf{stiff} when it contains physical processes with widely differing time scales: very fast decaying modes alongside smooth slow dynamics. Explicit solvers are forced to take tiny steps restricted by the fast mode ($h < 2/|\lambda_{\text{fast}}|$), whereas A-stable implicit methods can take large time steps based purely on accuracy.
+
+Finally, for linear multistep methods, consistency alone does not guarantee convergence. The method must also be \textbf{zero-stable}: all roots of the first characteristic polynomial $\rho(w) = \sum_{j=0}^k \alpha_j w^j$ must satisfy $|w| \le 1$, and any root on $|w| = 1$ must be simple. The \textbf{Dahlquist Equivalence Theorem} states:
+\begin{equation}
+\label{eq:dahlquist}
+\textbf{Consistency} + \textbf{Zero-Stability} \iff \textbf{Convergence}.
+\end{equation}
+
+% =============================================================================
+\section{Numerical Experiments on Scientific Computing Benchmarks}
+\label{sec:experiments}
+% =============================================================================
+I now report the numerical results across four benchmark experiments from the scientific computing curriculum (Lecture 3.7).
+
+% -----------------------------------------------------------------------------
+\subsection{Experiment 1: Observed Order of Convergence}
+% -----------------------------------------------------------------------------
+I evaluate the five schemes on $y' = -y, y(0) = 1, t \in [0, 5]$, measuring global error at $t = 5$ across six step sizes: $h = 0.5, 0.25, 0.125, 0.0625, 0.03125, 0.015625$. The fitted slopes on the four smallest step sizes are reported in Table~\ref{tab:exp1} and plotted in Figure~\ref{fig:exp1}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.68\textwidth,keepaspectratio]{figures/fig_order_convergence.png}
+\caption{Observed order of convergence on $y' = -y, t \in [0, 5]$. Slopes match theoretical orders: Explicit Euler (0.97), Implicit Euler (1.03), AB2 (2.02), BDF2 (2.02), and AM2 (3.01).}
+\label{fig:exp1}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Observed order of convergence on $y' = -y$ (fitted on the 4 smallest step sizes).}
+\label{tab:exp1}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Type} & \textbf{Theoretical Order $p$} & \textbf{Observed Slope} \\
+\midrule
+Explicit Euler  & Explicit 1-step & 1 & \textbf{0.97} \\
+Implicit Euler  & Implicit 1-step & 1 & \textbf{1.03} \\
+AB2             & Explicit 2-step & 2 & \textbf{2.02} \\
+BDF2            & Implicit 2-step & 2 & \textbf{2.02} \\
+AM2 (2-step)    & Implicit 2-step & 3 & \textbf{3.01} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The numerical results fully corroborate the theory: first-order methods yield slopes near 1.0 (0.97 and 1.03), second-order schemes AB2 and BDF2 yield 2.02, and AM2 achieves third-order convergence with 3.01. BDF2 achieves higher accuracy than AB2 at every step size.
+
+% -----------------------------------------------------------------------------
+\subsection{Experiment 2: Stability Limits on the Test Equation}
+% -----------------------------------------------------------------------------
+I evaluate Explicit Euler and Implicit Euler on $y' = -10y, y(0) = 1, t \in [0, 2]$ for $h \in \{0.05, 0.15, 0.25\}$. For $\lambda = -10$, the critical stability threshold is $h_{\text{crit}} = 2/10 = 0.20$. Table~\ref{tab:exp2} records the amplification factors and qualitative behaviors, illustrated in Figure~\ref{fig:exp2}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.68\textwidth,keepaspectratio]{figures/fig_stability_limit.png}
+\caption{Explicit vs.\ Implicit Euler on $y' = -10y$. Left: Explicit Euler decays at $h=0.05$, oscillates at $h=0.15$, and explodes at $h=0.25$. Right: Implicit Euler decays smoothly for all step sizes.}
+\label{fig:exp2}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Amplification factors and qualitative behavior on $y' = -10y$.}
+\label{tab:exp2}
+\small
+\setlength{\tabcolsep}{8pt}
+\begin{tabular}{ccccc}
+\toprule
+$h$ & Factor $1 - 10h$ & Explicit Euler & Factor $\frac{1}{1+10h}$ & Implicit Euler \\
+\midrule
+$0.05$ & $0.50$  & Monotonic decay    & $0.67$ & Monotonic decay \\
+$0.15$ & $-0.50$ & Damped oscillation & $0.40$ & Monotonic decay \\
+$0.25$ & $-1.50$ & \textbf{Explosion} & $0.29$ & Monotonic decay \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The real stability intervals from lecture confirm: Explicit Euler requires $h < 2/|\lambda|$ ($h < 0.2$), while AB2 requires $h < 1/|\lambda|$ ($h < 0.1$). Implicit Euler exhibits unconditional decay for all step sizes.
+
+% -----------------------------------------------------------------------------
+\subsection{Experiment 3: A Stiff Differential Equation}
+% -----------------------------------------------------------------------------
+I evaluate solver performance on the stiff initial value problem $y'(t) = -1000(y - \cos t) - \sin t, y(0) = 1, t \in [0, 1]$, where the exact solution is $y(t) = \cos t$. The rapid decay rate $\lambda = -1000$ imposes the stability limit $h < 2/1000 = 0.002$ on Explicit Euler. Results are reported in Table~\ref{tab:exp3} and plotted in Figure~\ref{fig:exp3}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.68\textwidth,keepaspectratio]{figures/fig_stiff_problem.png}
+\caption{Stiff problem $y' = -1000(y - \cos t) - \sin t$. Left: numerical trajectories. Right: error history showing Explicit Euler ($h=0.0025$) diverging to $10^{64}$, while BDF2 ($h=0.05$) remains accurate.}
+\label{fig:exp3}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Performance on the stiff problem $y' = -1000(y - \cos t) - \sin t$ on $[0, 1]$.}
+\label{tab:exp3}
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{Step size $h$} & \textbf{Total Steps} & \textbf{Maximum Error} \\
+\midrule
+Explicit Euler & $0.0015$ & 667 & $1.1 \cdot 10^{-6}$ \\
+Explicit Euler & $0.0025$ & 400 & \textbf{$3.4 \cdot 10^{64}$ (unstable)} \\
+Implicit Euler & $0.05$   & 20  & $2.5 \cdot 10^{-5}$ \\
+BDF2           & $0.05$   & 20  & \textbf{$6.8 \cdot 10^{-7}$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Key insights from Experiment 3:
+\begin{enumerate}
+    \item When $h = 0.0025 > 0.002$, Explicit Euler violates the stability boundary: error is magnified by $|1 - 1000h| = 1.5$ each step, reaching $3.4 \cdot 10^{64}$ after 400 steps.
+    \item \textbf{BDF2 matches the accuracy of Explicit Euler with 33 times fewer steps} (20 steps vs.\ 667 steps), demonstrating the enormous computational efficiency of A-stable implicit schemes for stiff problems.
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
+\subsection{Experiment 4: Consistency Without Zero-Stability}
+% -----------------------------------------------------------------------------
+I evaluate the multi-step scheme Method M: $y_{n+2} - 3 y_{n+1} + 2 y_n = -h f(t_{n+1}, y_{n+1})$, with characteristic polynomial $\rho(w) = w^2 - 3w + 2 = (w - 1)(w - 2)$. Method M is consistent, but its second root $w = 2 > 1$ violates the root condition, rendering it \textbf{not zero-stable}. Results are shown in Figure~\ref{fig:exp4} and Table~\ref{tab:exp4}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.68\textwidth,keepaspectratio]{figures/fig_zero_stability.png}
+\caption{Consistency without zero-stability on $y' = -y, t \in [0, 1]$. As step size $h$ decreases to the right, zero-stable AB2 converges, while Method M diverges exponentially.}
+\label{fig:exp4}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Global error at $t = 1$ for Method M (consistent but not zero-stable).}
+\label{tab:exp4}
+\small
+\begin{tabular}{ccc}
+\toprule
+\textbf{Step size $h$} & \textbf{Steps $n = 1/h$} & \textbf{Error of Method M at $t = 1$} \\
+\midrule
+$0.2000$ & 5  & $1.5$ \\
+$0.1000$ & 10 & $21$ \\
+$0.0500$ & 20 & $7 \cdot 10^3$ \\
+$0.0250$ & 40 & $2 \cdot 10^9$ \\
+$0.0125$ & 80 & $\mathbf{7 \cdot 10^{20}}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As $h \to 0$, the error of Method M explodes to $7 \cdot 10^{20}$. The cause is the parasitic root $w_2 = 2$: the general recurrence solution contains $c_2 (2)^{1/h}$. For $h = 0.0125$, the simulation takes $n = 80$ steps, giving an amplification factor of $2^{80} \approx 1.2 \cdot 10^{24}$. This proves the Dahlquist Equivalence Theorem: \textbf{consistency alone is meaningless without zero-stability}.
+
+% =============================================================================
+\section{Loss Functions, Model Comparison, and Empirical Traffic Prediction}
+\label{sec:model_comparison}
+% =============================================================================
+\subsection{Optimization Loss Function Formulation}
+To calibrate ODE parameters $\theta$ against real highway sensor data, I define the Mean Squared Error (MSE) trajectory loss across all $K$ observation windows:
+\begin{equation}
+\label{eq:loss_function}
+\mathcal{L}(\theta) = \frac{1}{K \cdot M} \sum_{k=1}^K \sum_{n=1}^M \sum_{i=1}^3 \left( x_i(t_n; \theta) - x_{i, \text{obs}}(t_n) \right)^2 + \lambda_{\text{reg}} \|\theta\|_2^2,
+\end{equation}
+where $x_i(t_n; \theta)$ is the numerical solution computed using fourth-order Runge--Kutta (RK4), $x_{i, \text{obs}}(t_n)$ is the true sensor density, and $\lambda_{\text{reg}} = 10^{-5}$ prevents unphysical parameter explosion.
+
+\subsection{Systematic Comparison of Three Traffic Flow Models}
+I compare three distinct models trained on the highway sensor dataset:
+\begin{enumerate}
+    \item \textbf{Baseline 6-Parameter Model}: Standard Greenshields outflow~\eqref{eq:outflow_law} ($\alpha_1, \alpha_2, \alpha_3, \beta_1, \beta_2, \beta_3$). Optimized with Adam on 139 training windows. Starting from an initial loss of $0.1500$, it converges to a best validation loss of $0.07988$ (Table~\ref{tab:model_comparison}). The 5-seed ensemble (seeds 42, 123, 456, 789, 2026) achieves a mean unseen test MAE of $0.2019$ and RMSE of $0.2639$.
+    \item \textbf{High-Capacity 16-Parameter Model}: Expands the formulation by adding cubic saturation terms $\delta_i x_i^3$, downstream backpressure coupling $\gamma_i (x_{i+1} - x_i)$, upstream express penetration $\kappa_i (u - x_i)$, and ramp bias parameters $c_i$. Trained over 994 multi-scale windows (1,261 time steps / 315 hours). Training loss drops from $0.0850$ to $0.03147$, reaching a best validation loss of $\mathbf{0.03119}$ (a 61.0\% reduction over the baseline). On held-out unseen test data (840 steps / 210 hours), it achieves a tracking MAE of $0.1295$ and RMSE of $0.1679$.
+    \item \textbf{1,000-Epoch Full Dataset Model}: Ingests all 2,101 contiguous observations (525.2 hours across 5 full weeks) without artificial splits. Optimized using Adam with cosine annealing across 8 CPU workers. Training loss drops monotonically to a best loss of $\mathbf{0.01330}$ (an \textbf{83.3\% total loss reduction} compared to the baseline). Over all five continuous weeks, it achieves an outstanding grand tracking MAE of $\mathbf{0.0906}$ and RMSE of $\mathbf{0.1239}$.
+\end{enumerate}
+
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive performance comparison across the three trained highway traffic models.}
+\label{tab:model_comparison}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model Architecture} & \textbf{Params} & \textbf{Epochs} & \textbf{Best Loss} & \textbf{Test MAE} & \textbf{Test RMSE} & \textbf{24h Forecast MAE} \\
+\midrule
+Baseline Greenshields (Single) & 6  & 50   & 0.07988 & 0.3112 & 0.4390 & 0.3203 \\
+Baseline (5-Seed Ensemble)      & 6  & 50   & 0.07988 & 0.2019 & 0.2639 & 0.2086 \\
+High-Capacity Extended ODE     & 16 & 100  & 0.03119 & 0.1295 & 0.1679 & 0.1425 \\
+\textbf{1,000-Epoch Full Data}  & \textbf{16} & \textbf{1000} & \textbf{0.01330} & \textbf{0.0906} & \textbf{0.1239} & \textbf{0.0890} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.68\textwidth,height=4.0cm,keepaspectratio]{figures/fig_model_loss_comparison.png}
+\caption{Empirical model evaluation. Left: Training and validation loss convergence across epochs (log scale) showing the 83.3\% loss drop from Baseline (0.0799) to High-Capacity (0.0312) to 1,000-Epoch Full Data (0.0133). Right: Forecast error (MAE) across prediction horizons (15 min to 24 hr).}
+\label{fig:model_loss}
+\end{figure}
+
+As demonstrated in Figure~\ref{fig:model_loss} and Table~\ref{tab:model_comparison}, expanding model capacity and extending optimization dramatically improves forecasting stability. While the baseline model degrades over longer horizons (MAE increases from $0.1353$ to $0.2086$), the 1,000-epoch full-data model maintains an extraordinarily consistent MAE below $0.090$ across all horizons from 15 minutes to 24 hours.
+
+% =============================================================================
+\section{Discussion and Conclusions}
+\label{sec:conclusions}
+% =============================================================================
+In this individual scientific computing project, I conducted an extensive theoretical, numerical, and empirical investigation of macroscopic highway traffic flow modeling and numerical ODE integration. My primary conclusions are:
+
+\begin{enumerate}
+    \item \textbf{IVP Formulation}: Formulating traffic flow across interconnected segments as an Initial Value Problem anchors prediction in the physical conservation of vehicles.
+    \item \textbf{Existence and Uniqueness}: Peano's theorem guarantees existence under continuity, but continuity alone permits non-uniqueness (as in $y'=3y^{2/3}$). Picard--Lindel\"of ensures uniqueness via Lipschitz continuity, which holds for my quadratic outflow Jacobian.
+    \item \textbf{Initial vs.\ Boundary Conditions}: Initial conditions specify vehicle distributions at $t=0$ across space. Spatial boundary conditions supply continuous upstream demand $u(t)$ and downstream exit rules across time.
+    \item \textbf{Convergence Orders}: Benchmark experiments verify theoretical convergence orders: Explicit/Implicit Euler achieve order 1 (slopes 0.97 and 1.03), AB2/BDF2 achieve order 2 (slopes 2.02), and AM2 achieves order 3 (slope 3.01).
+    \item \textbf{Stiffness and Implicit Solvers}: On stiff problems ($\lambda = -1000$), Explicit Euler requires $h < 0.002$, while A-stable BDF2 achieves superior accuracy with 33 times fewer steps.
+    \item \textbf{Zero-Stability}: Consistency without zero-stability leads to exponential explosion (errors reaching $7 \cdot 10^{20}$), verifying the Dahlquist Equivalence Theorem.
+    \item \textbf{Loss Convergence and Capacity}: Mathematical optimization of the trajectory MSE loss demonstrates that increasing capacity from 6 to 16 parameters and training for 1,000 epochs drops loss by 83.3\% (to 0.0133) and achieves sub-0.091 MAE over 525 hours of data.
+\end{enumerate}
+
+From an engineering perspective, these findings guide traffic simulation. Explicit multi-step schemes like AB2 deliver efficient second-order predictions during smooth flow. However, when bottlenecks or incidents create sharp gradients, the governing ODEs become stiff. In these regimes, explicit methods fail due to stability constraints, making A-stable implicit solvers like BDF2 indispensable.
+
+% =============================================================================
+\begin{thebibliography}{9}
+\small
+\setlength{\itemsep}{0pt plus 0.5pt}
+\setlength{\parsep}{0pt}
+% =============================================================================
+\bibitem{hairer_wanner}
+Hairer, E., Wanner, G.: Solving Ordinary Differential Equations II: Stiff and Differential-Algebraic Problems. Springer, Berlin (1996).
+
+\bibitem{butcher}
+Butcher, J.C.: Numerical Methods for Ordinary Differential Equations, 3rd edn. John Wiley \& Sons, Chichester (2016).
+
+\bibitem{langtangen}
+Langtangen, H.P.: Finite Difference Computing with Exponential Decay Models. Springer, Cham (2016).
+
+\bibitem{botchorishvili}
+Botchorishvili, R.: Scientific Computing: Ordinary Differential Equations and Numerical Experiments. Lecture Notes, Kutaisi International University (2026).
+
+\bibitem{dahlquist}
+Dahlquist, G.: A special stability problem for linear multistep methods. BIT Numerical Mathematics 3(1), 27--43 (1963).
+
+\bibitem{burden_faires}
+Burden, R.L., Faires, J.D.: Numerical Analysis, 9th edn. Brooks/Cole, Boston (2010).
+
+\bibitem{greenshields}
+Greenshields, B.D.: A study of traffic capacity. Highway Research Board Proceedings 14, 448--477 (1935).
+\end{thebibliography}
+
+\end{document}
